@@ -1,0 +1,384 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #0d0d0d;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.header {
+    width: clamp(80%, 80vw, 1000px);
+    margin: 20px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    width: 100%;
+}
+.task-box {
+    width: clamp(80%, 90vw, 900px);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    animation: neonPulse 2s infinite ease-in-out;
+}
+@keyframes neonPulse {
+    0% { border-color: rgba(0, 255, 255, 0.3); box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
+    50% { border-color: rgba(0, 255, 255, 0.7); box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+    100% { border-color: rgba(0, 255, 255, 0.3); box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
+}
+.task-box::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(0, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: -1;
+}
+.task-box.expanded::before {
+    animation: rippleEffect 1s ease-out;
+}
+@keyframes rippleEffect {
+    0% { width: 0; height: 0; opacity: 0.5; }
+    100% { width: 200%; height: 200%; opacity: 0; }
+}
+.task-box:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
+    border-color: rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+.task-box.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    max-height: 80vh;
+    width: clamp(80%, 90vw, 800px);
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+    z-index: 1000;
+    padding: 30px;
+    animation: expandAnimation 0.5s ease forwards;
+    border: 2px solid rgba(0, 255, 255, 0.8);
+}
+.task-box.expanded .view-btn {
+    display: none;
+}
+.task-box img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 5px;
+    object-fit: contain;
+}
+.task-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.code-box {
+    position: relative;
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-x: auto;
+    width: 100%;
+}
+pre {
+    margin: 0;
+    color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 255, 255, 0.8);
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+.copy-btn:hover {
+    background: rgba(0, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+.copy-btn.copied {
+    background: rgba(0, 255, 107, 0.8);
+    box-shadow: 0 0 15px rgba(0, 255, 107, 0.8);
+}
+.copy-btn::before {
+    content: "Copy";
+}
+.copy-btn.copied::before {
+    content: "Copied!";
+}
+.view-btn {
+    display: block;
+    margin: 0 auto;
+    background: rgba(0, 255, 255, 0.8);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+.view-btn:hover {
+    background: rgba(0, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+.task-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    width: 100%;
+}
+.task-box.expanded .task-content {
+    display: block;
+    opacity: 1;
+}
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+}
+.backdrop.active {
+    display: block;
+}
+.quiz-container {
+    width: clamp(80%, 90vw, 900px);
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(0, 212, 255, 0.2));
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+    margin: 40px auto;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease forwards;
+}
+.quiz-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.3) 0%, transparent 70%);
+    opacity: 0.5;
+    z-index: -1;
+    animation: rotateGlow 10s infinite linear;
+}
+.quiz-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4), 0 0 20px rgba(0, 212, 255, 0.4);
+}
+.quiz-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+    margin-bottom: 20px;
+}
+.quiz-link {
+    display: inline-block;
+    background: rgba(255, 107, 107, 0.8);
+    padding: 15px 30px;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+}
+.quiz-link:hover {
+    background: rgba(255, 107, 107, 1);
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.9);
+}
+.download-btn {
+    display: block;
+    margin: 15px auto 0;
+    background: rgba(255, 107, 107, 0.8);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 1em;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+.download-btn:hover {
+    background: rgba(255, 107, 107, 1);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
+}
+@keyframes expandAnimation {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* Media Queries untuk Dinamis di Desktop dan Mobile */
+@media (max-width: 1024px) {
+    .header, .task-box, .quiz-container {
+        width: clamp(85%, 90vw, 900px);
+    }
+    .task-box.expanded {
+        width: clamp(85%, 95vw, 800px);
+        max-height: 85vh;
+    }
+    .task-title {
+        font-size: 1.4em;
+    }
+    .quiz-title {
+        font-size: 1.8em;
+    }
+}
+@media (max-width: 768px) {
+    .header {
+        padding: 20px;
+    }
+    .container {
+        padding: 10px;
+        gap: 10px;
+    }
+    .task-box {
+        padding: 15px;
+    }
+    .task-box.expanded {
+        width: clamp(90%, 95vw, 800px);
+        padding: 20px;
+        max-height: 85vh;
+    }
+    .task-title {
+        font-size: 1.3em;
+    }
+    .code-box {
+        padding: 10px;
+    }
+    .copy-btn {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    .view-btn {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+    .download-btn {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+    .quiz-container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+    .quiz-title {
+        font-size: 1.6em;
+    }
+    .quiz-link {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+}
+@media (max-width: 480px) {
+    .header {
+        padding: 15px;
+    }
+    .container {
+        padding: 5px;
+        gap: 8px;
+    }
+    .task-box {
+        padding: 10px;
+    }
+    .task-box.expanded {
+        width: clamp(95%, 98vw, 800px);
+        max-height: 90vh;
+        padding: 15px;
+    }
+    .task-title {
+        font-size: 1.2em;
+    }
+    .code-box {
+        padding: 8px;
+    }
+    .copy-btn {
+        padding: 5px 8px;
+        font-size: 0.7em;
+    }
+    .view-btn {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+    .download-btn {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+    .quiz-container {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    .quiz-title {
+        font-size: 1.5em;
+    }
+    .quiz-link {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Praktikum</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="header">
+        <h2>LAPORAN PRAKTIKUM</h2>
+        <h3>Pemrograman Terstruktur</h3>
+        <p><em>Praktikum 10:MENU BAR, MENU, MENU ITEM dan SEPERATOR</em></p>
+        <img src="wow/profil.png" alt="Logo Kampus">
+        <p>Nama : <em>Eka Kurniawan Zein</em></p>
+        <p>NIM : <em>24026004</em></p>
+        <p><strong>PROGRAM STUDI D3 TEKNOLOGI INFORMASI<br>POLITEKNIK SEMEN INDONESIA GRESIK</strong></p>
+        <p><em>26/09/2025</em></p>
+    </div>
+    <div class="container">
+        <div class="task-box">
+            <h2 class="task-title">Buat program untuk menghitung Luas dan Keliling dari Persegi Panjang, Segitiga dan
+Lingkaran.</h2>
+            <button class="view-btn">Lihat</button>
+            <div class="task-content">
+                <h3>Coding Program-j frame form</h3>
+                <div class="code-box">   
+<pre><code>
+private void btnProsesActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    int IndexMakanan = ListMakan.getSelectedIndex();
+    int IndexMinMinuman = ListMinuman.getMinSelectionIndex();
+    int IndexMaxMinuman = ListMinuman.getMaxSelectionIndex();
+    int IndexMinOlahraga = ListOlahraga.getMinSelectionIndex();
+    int IndexMaxOlahraga = ListOlahraga.getMaxSelectionIndex();
+
+    String Kalimat;
+    Kalimat = "Daftar Makanan yang dipilih : \n";
+    Kalimat = Kalimat +
+    ListMakan.getModel().getElementAt(IndexMakanan).toString() + "\n";
+
+    Kalimat = Kalimat + "Daftar Minuman yang dipilih : \n";
+    for (int i = IndexMinMinuman; i <= IndexMaxMinuman; i++) {
+        Kalimat = Kalimat +
+        ListMinuman.getModel().getElementAt(i).toString() + "\n";
+    }
+
+    Kalimat = Kalimat + "Daftar Olahraga yang dipilih : \n";
+    for (int i = IndexMinOlahraga; i <= IndexMaxOlahraga; i++) {
+        Kalimat = Kalimat +
+        ListOlahraga.getModel().getElementAt(i).toString() + "\n";
+    }
+
+    MemoResume.setText(Kalimat);
+}
+                 
+</code></pre>
+                    <button class="copy-btn"></button>
+                </div>
+            </div>
+        </div>
+       
+        <div class="task-box">
+            <h2 class="task-title">Output Program</h2>
+            <button class="view-btn">Lihat</button>
+            <div class="task-content">
+                <img src="wow/1.png" alt="Tampilan Output 1">
+                
+                <a href="wow/1.png" download="Output_Coding1.png" class="download-btn">Unduh Gambar</a>
+            </div>
+        </div>
+       
+       
+ 
+    <div class="quiz-container">
+        <h2 class="quiz-title">Eksplorasi Soal-Soal</h2>
+        <a href="https://ekz121.github.io/comming-soon/" class="quiz-link">Ke Halaman Soal</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
